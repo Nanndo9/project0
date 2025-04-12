@@ -1,5 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Employee } from './EmployeeEntity';
+import { SalaryRange } from './SalaryRangeEntity';
 
 @Entity('job_Position')
 export class JobPosition {
@@ -14,6 +21,10 @@ export class JobPosition {
 
     @Column('simple-array', { nullable: true })
     responsibilities: string[];
+
     @OneToMany(() => Employee, (employee) => employee.jobPosition)
     employees: Employee[];
+
+    @ManyToOne(() => SalaryRange, (salaryRange) => salaryRange.jobPosition)
+    salaryRange: SalaryRange;
 }

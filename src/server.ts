@@ -1,17 +1,23 @@
-import express from "express"
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { AppDataSource } from './config/DataSource';
 
-const app = express()
+dotenv.config();
 
-const port = 3000;
+AppDataSource.initialize()
+    .then(() => {
+        const app = express();
 
-app.get("/",(req,res)=>{
-    res.json({
-        salada: "Ceesar",
-        Suco:"Morango"
+        app.use(express.json());
+        app.use(express.urlencoded({ extended: true }));
+        app.use(cors());
+
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`✅ Server is running on http://localhost:${PORT}`);
+        });
     })
-})
-
-
-app.listen(port,()=>{
-    console.log(`App runing in http://localhost:3000`)
-})
+    .catch((err) => {
+        console.error('❌ Error initializing database:', err);
+    });
