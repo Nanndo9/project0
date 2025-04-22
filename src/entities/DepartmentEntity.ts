@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Employee } from './EmployeeEntity';
+import { JobPosition } from './JobPositionEntity';
 
 @Entity('departments')
 export class Departments {
@@ -14,4 +15,7 @@ export class Departments {
 
     @OneToMany(() => Employee, (employee) => employee.departments)
     employees: Employee[];
+
+    @OneToMany(() => JobPosition, (jobPosition) => jobPosition.department)
+    jobPositions: JobPosition[];
 }

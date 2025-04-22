@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Employee } from './EmployeeEntity';
 import { SalaryRange } from './SalaryRangeEntity';
+import { Departments } from './DepartmentEntity';
 
 @Entity('job_Position')
 export class JobPosition {
@@ -27,4 +28,7 @@ export class JobPosition {
 
     @ManyToOne(() => SalaryRange, (salaryRange) => salaryRange.jobPosition)
     salaryRange: SalaryRange;
+
+    @ManyToOne(() => Departments, (department) => department.jobPositions)
+    department: Departments;
 }
